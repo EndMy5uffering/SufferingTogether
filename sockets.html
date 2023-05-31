@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSockets Test</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+    <script>
+        const ws = new WebSocket('ws://suffering.ddnss.de:25566')
+        const isOpen = false;
+        ws.addEventListener('open', (e) => {
+            ws.addEventListener("message", (event) => {
+                console.log("Message from server ", event.data);
+            });
+        })
+
+        const btn_action = () => {
+            ws.send(JSON.stringify({action: "pause"}))
+        }
+    </script>
+</head>
+<body>
+    <button onclick="btn_action()">Test</button>
+</body>
+</html>
