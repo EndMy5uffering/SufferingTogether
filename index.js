@@ -1,17 +1,16 @@
 const express = require("express")
 const fs = require("fs");
 const WebSocket = require("ws");
+const routerTest = require('./routes/routeTest')
 
 const app = express()
 const PORT = 666
 
-const videoPath = "./videos/The Eminence in Shadow AMV.mp4";
-const videoSize = fs.statSync(videoPath).size;
-
-
 const wsServer = new WebSocket.Server({
     port: 25566
 }) 
+
+app.use('/test', routerTest)
 
 wsServer.on("connection", function(ws) {    // what should a websocket do on connection
     ws.on("message", function(msg) {        // what to do on message event
@@ -32,11 +31,11 @@ app.get('/ws', (req, res) => {
     res.sendFile(__dirname + "/sockets.html");
 })
 
-app.get('/ws', (req, res) => {
-    res.sendFile(__dirname + "/sockets.html");
-})
-
 app.get("/video", function (req, res) {
+
+    const videoPath = "./videos/The Eminence in Shadow AMV.mp4";
+    const videoSize = fs.statSync(videoPath).size;
+
     const range = req.headers.range;
     if (!range) {
         res.status(400).send("Requires Range header");
