@@ -1,5 +1,3 @@
 function getToken(userName, userPassword) {
-
-
     
 }
